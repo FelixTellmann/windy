@@ -749,7 +749,7 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: string; styles?: string; filteredProps? } {
+export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: string; styles?: string; styleArray: [string,  string][]; filteredProps? } {
   
   if (!("breakpoints" in config)) config.breakpoints = defaultConfig.breakpoints;
   if (!("remBase" in config)) config.remBase = defaultConfig.remBase;
@@ -818,14 +818,14 @@ export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: strin
           if (i === 0) {
             const className = `${k}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-            const hash = String(hashString(pseudoClassName));
-            styles.push([hash, className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
+            /* const hash = String(hashString(pseudoClassName)); */
+            styles.push([ className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
           } else {
             const className = `${k}_bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-            const hash = String(hashString(className));
+            /* const hash = String(hashString(className)); */
             styles.push([
-              hash,
+              
               className,
               `@media screen and (min-width: ${breakpoints[i]}px){${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}}`
             ]);
@@ -843,5 +843,5 @@ export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: strin
     style = style.replace(/~/g, props._forwardSelector.selector);
   }
   
-  return { id: id || undefined, styles: id ? style : undefined, test: styles, filteredProps };
+  return { id: id || undefined, styles: id ? style : undefined, styleArray: styles, filteredProps };
 }
