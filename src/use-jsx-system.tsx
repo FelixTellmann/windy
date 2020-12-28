@@ -712,9 +712,7 @@ function createStyleString(parsedCssProps: LayoutProps, breakpoint = 0, cfg: Con
 }
 
 function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): string {
-  
   let acc = "";
-  
   if (key === "selector") return acc;
   if (breakpoint === 0) {
     if ((key === "display" || key === "d") && getResponsiveValue(val, breakpoint) === "flex") {
@@ -793,13 +791,10 @@ export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: strin
         const style = createSingleStyle([key, val], i, config);
         if (i === 0) {
           const className = `${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
-          const hash = String(hashString(className));
-          styles.push([hash, className, `.${className.replace(/([%])/g, "\\$1")}{${style}}`]);
+          styles.push([className, `.${className.replace(/([%])/g, "\\$1")}{${style}}`]);
         } else {
           const className = `bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
-          const hash = String(hashString(className));
           styles.push([
-            hash,
             className,
             `@media screen and (min-width: ${breakpoints[i]}px){.${className.replace(/([%])/g, "\\$1")}{${style}}}`
           ]);
@@ -813,18 +808,14 @@ export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: strin
       for (let i = 0; i < breakpoints.length; i++) {
         if (Array.isArray(val) && val.length > i || i === 0) {
           const style = createSingleStyle([key, val], i, config);
-          
           if (i === 0) {
             const className = `${k}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-            /* const hash = String(hashString(pseudoClassName)); */
             styles.push([ className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
           } else {
             const className = `${k}_bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-            /* const hash = String(hashString(className)); */
             styles.push([
-              
               className,
               `@media screen and (min-width: ${breakpoints[i]}px){${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}}`
             ]);
