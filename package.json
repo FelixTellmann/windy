@@ -1,0 +1,56 @@
+{
+  "name": "windy",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "dist/windy.js",
+  "umd:main": "dist/windy.umd.js",
+  "module": "dist/windy.m.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.tsx",
+  "scripts": {
+    "dev": "next",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "npm run build",
+    "test": "jest --verbose --coverage --silent",
+    "test:watch": "jest --watch --runInBand --silent",
+    "prebuild": "rimraf dist",
+    "build": "rimraf dist && microbundle -o dist/ --jsx --sourcemap false --target web"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.10",
+    "@types/react": "^17.0.0",
+    "@types/string-hash": "^1.1.1",
+    "@types/styled-jsx": "^2.2.8",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "babel-eslint": "^10.1.0",
+    "classnames": "^2.2.6",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "next": "^10.0.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "string-hash": "^1.1.3",
+    "styled-jsx": "^3.3.2",
+    "typescript": "^4.1.3"
+  },
+  "devDependencies": {
+    "microbundle": "^0.12.4",
+    "rimraf": "^3.0.2"
+  },
+  "peerDependencies": {
+    "classnames": ">= 2.x",
+    "csstype": ">= 3.x",
+    "react": ">= 16.x",
+    "react-dom": ">= 16.x",
+    "styled-jsx": ">= 3.x"
+  }
+}
