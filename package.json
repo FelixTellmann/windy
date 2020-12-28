@@ -1,6 +1,6 @@
 {
   "name": "windy-ui",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "dist/windy-ui.js",
   "umd:main": "dist/windy-ui.umd.js",
