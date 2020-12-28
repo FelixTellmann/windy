@@ -744,7 +744,6 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
     }
   }
   
-  console.log(acc);
   return acc;
 }
 
@@ -830,13 +829,11 @@ export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: strin
               `@media screen and (min-width: ${breakpoints[i]}px){${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}}`
             ]);
           }
-          
         }
       }
     });
   });
   
-  console.log(styles);
   const id = (base + pseudo) !== "" ? String(hashString(base + pseudo)) : undefined;
   let style = (base + pseudo).replace(/&/g, `.jsx-${id}`);
   if (props._forwardSelector && props._forwardSelector.selector) {
