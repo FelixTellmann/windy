@@ -3,10 +3,10 @@ import { Component, FC, useEffect, useState } from "react";
 import { Test } from "styled-jsx/style";
 import cn from "classnames";
 import _stylesheetRegistry from "styled-jsx/dist/stylesheet-registry";
-import flushToReact from 'styled-jsx/server'
+import { flushToHTML } from 'styled-jsx/server'
 import { CssProps, useJsxSystem } from "../src";
 
-const styleSheetRegistry = new _stylesheetRegistry();
+/* const styleSheetRegistry = new _stylesheetRegistry();
 
 class Test2 extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class Test2 extends Component {
     </>;
   }
   
-}
+} */
 
 /* const Test: FC<CssProps> = (props) => {
   const test = useJsxSystem(props);
@@ -67,8 +67,8 @@ class Test2 extends Component {
 export const Index: FC = () => {
   
   const [test2, setTest2] = useState(1);
-  
   return <>
+    
     <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
     <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
     <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
@@ -78,6 +78,7 @@ export const Index: FC = () => {
       @media screen and (min-width: 600px) {
         .w-50 {
           width: 50%;
+          padding: ${test2};
         }
       }
     `}</style>
