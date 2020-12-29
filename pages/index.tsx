@@ -1,6 +1,6 @@
 import { Head } from "next/document";
 import { Component, FC, useEffect, useState } from "react";
-import { Test } from "styled-jsx/style";
+import { Test } from "styled-jsx2/style";
 import cn from "classnames";
 import _stylesheetRegistry from "styled-jsx/dist/stylesheet-registry";
 import { flushToHTML } from 'styled-jsx/server'
@@ -74,14 +74,14 @@ export const Index: FC = () => {
     <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
     <Test p={3} border="1px solid red" _hfa={{ p: [1, 2] }} m="auto" w={[`100%`, `50%`]} d="flex">aasd</Test>
     <div className="w-50">asdasd</div>
-    <style jsx>{`
+    {/* <style jsx>{`
       @media screen and (min-width: 600px) {
         .w-50 {
           width: 50%;
           padding: ${test2};
         }
       }
-    `}</style>
+    `}</style> */}
   </>;
 };
 
