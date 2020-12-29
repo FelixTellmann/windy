@@ -746,7 +746,7 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useJsxSystem(props: any, config: ConfigProps = {}): { id?: string; styles?: string; styleArray: [string,  string][]; filteredProps? } {
+export function windyUi(props: any, config: ConfigProps = {}): { id?: string; styles?: string; styleArray: [string,  string][]; filteredProps? } {
   
   if (!("breakpoints" in config)) config.breakpoints = defaultConfig.breakpoints;
   if (!("remBase" in config)) config.remBase = defaultConfig.remBase;

@@ -4,7 +4,7 @@ import { Test } from "styled-jsx2/style";
 import cn from "classnames";
 import _stylesheetRegistry from "styled-jsx/dist/stylesheet-registry";
 import { flushToHTML } from 'styled-jsx/server'
-import { CssProps, useJsxSystem } from "../src";
+import { CssProps, windyUi } from "../src";
 
 /* const styleSheetRegistry = new _stylesheetRegistry();
 
