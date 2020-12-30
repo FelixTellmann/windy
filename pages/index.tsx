@@ -1,15 +1,16 @@
 import { FC, useState } from "react";
-import { Test } from "src/styled-jsx-extension";
+import { TEST, Element } from "src/styled-jsx-extension";
 
+const Div = Element('div')
+const H1 = Element('h1')
 export const Index: FC = () => {
+  
   
   const [test2, setTest2] = useState(1);
   return <>
-    <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
-    <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
-    <Test p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Test>
-    <Test border="2px solid green" position="absolute" d="block" p={3}>aasd</Test>
-    <Test p={5} border="1px solid red" _hfa={{ p: [1, 2] }} m="auto" w={[`100%`, `50%`]} d="flex" >aasd</Test>
+    <Div p={4}>test</Div>
+    <Div p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Div>
+    <H1 p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</H1>
      <div className="w-50">asdasd</div>
      <style jsx>{`
       @media screen and (min-width: 600px) {

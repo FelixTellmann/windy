@@ -1,7 +1,15 @@
 import cn from "classnames";
 import React, { createElement, FC, forwardRef, HTMLAttributes, ReactElement, useEffect, useState } from "react";
 import StyleSheetRegistry from "styled-jsx/dist/stylesheet-registry";
+import { preflightCss } from "./preflight.css";
 import { CssProps, windyUi } from "./windy-ui";
+
+type FactoryProps = {
+  className?: string
+  element?: string
+  children?
+  ref?
+}
 
 function invariant(condition, message) {
   if (!condition) {
@@ -65,70 +73,86 @@ class Registry extends StyleSheetRegistry {
 
 const styleSheetRegistry = new Registry();
 
-type ElementProps = {
-  className?: string
-  type?: string
-  children?
-  forwardRef?
-}
-
-const Element = (HTMLTag: string, ref?: unknown): FC<any & ElementProps & HTMLAttributes<any> & CssProps> => {
+export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAttributes<any> & FactoryProps & CssProps> => {
   if (ref) {
-    return forwardRef(({
-      type: htmlElement = HTMLTag,
-      className,
-      children,
-      ...props
-    }, ref) => {
-      const nextUi = windyUi(props);
+    return forwardRef(({ element = HTMLTag, ...props }, ref) => {
+      const test = windyUi(props);
       // eslint-disable-next-line new-cap
-      const [prevProps, setPrevProps] = useState([]);
-  
-      nextUi.styleArray.forEach(([className, style]) => {
+      const [prevProps, setPrevProps] = useState(test.styleArray);
+      
+      test.styleArray.forEach(([className, style]) => {
         // @ts-ignore
         styleSheetRegistry.add({ id: className, children: style });
       });
-  
-      // @ts-ignore
-      if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
-        prevProps.forEach(([className, style]) => {
-          styleSheetRegistry.remove({ id: className, children: style });
-        });
-      }
-  
+      
       useEffect(() => {
-        setPrevProps(nextUi.styleArray);
+        if (JSON.stringify(test.styleArray) !== JSON.stringify(prevProps)) {
+          // @ts-ignore
+          if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
+            prevProps.forEach(([className, style]) => {
+              styleSheetRegistry.remove({ id: className, children: style });
+            });
+          }
+          setPrevProps(test.styleArray);
+        }
       }, [props]);
-  
-      return React.createElement(htmlElement, { className: cn(nextUi.styleArray.map(([className]) => `${className}`)), ...nextUi.filteredProps }, props.children);
+      
+      return createElement(element, {
+        className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps,
+        ref
+      }, props.children);
     });
   } else {
-    
+    return ({ element = HTMLTag, ...props }) => {
+      const test = windyUi(props);
+      // eslint-disable-next-line new-cap
+      const [prevProps, setPrevProps] = useState(test.styleArray);
+      
+      test.styleArray.forEach(([className, style]) => {
+        // @ts-ignore
+        styleSheetRegistry.add({ id: className, children: style });
+      });
+      
+      useEffect(() => {
+        if (JSON.stringify(test.styleArray) !== JSON.stringify(prevProps)) {
+          // @ts-ignore
+          if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
+            prevProps.forEach(([className, style]) => {
+              styleSheetRegistry.remove({ id: className, children: style });
+            });
+          }
+          setPrevProps(test.styleArray);
+        }
+      }, [props]);
+      
+      return createElement(element, { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
+    };
   }
-}
+  
+};
 
-export const Factory: FC<HTMLAttributes<any> & CssProps> = (props) => {
+export const TEST = ({ element = "div", ...props }) => {
   const test = windyUi(props);
   // eslint-disable-next-line new-cap
-  const [prevProps, setPrevProps] = useState([]);
+  const [prevProps, setPrevProps] = useState(test.styleArray);
   
   test.styleArray.forEach(([className, style]) => {
     // @ts-ignore
     styleSheetRegistry.add({ id: className, children: style });
   });
   
-  // @ts-ignore
-  if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
-    prevProps.forEach(([className, style]) => {
-      styleSheetRegistry.remove({ id: className, children: style });
-    });
-  }
-  
   useEffect(() => {
-    setPrevProps(test.styleArray);
+    if (JSON.stringify(test.styleArray) !== JSON.stringify(prevProps)) {
+      // @ts-ignore
+      if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
+        prevProps.forEach(([className, style]) => {
+          styleSheetRegistry.remove({ id: className, children: style });
+        });
+      }
+      setPrevProps(test.styleArray);
+    }
   }, [props]);
-  
-  return React.createElement("div", { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
+  return createElement(element, { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
 };
 
 export function flushToReact(options: { nonce?: string; } = {}): Array<ReactElement> {
@@ -137,7 +161,18 @@ export function flushToReact(options: { nonce?: string; } = {}): Array<ReactElem
   // @ts-ignore
   styleSheetRegistry.flush();
   return [
-    React.createElement("style", {
+    createElement("style", {
+      id: `__jsx-preflight`,
+      // Avoid warnings upon render with a key
+      key: `__jsx-preflight`,
+      nonce: options.nonce ? options.nonce : undefined,
+      [`data-ids`]: css.reduce((acc, [id], i) => {
+        acc += `${i ? `,` : ""}${id}`;
+        return acc;
+      }, ""),
+      dangerouslySetInnerHTML: { __html: preflightCss }
+    }),
+    createElement("style", {
       id: `__jsx-global`,
       // Avoid warnings upon render with a key
       key: `__jsx-global`,

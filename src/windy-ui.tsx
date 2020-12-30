@@ -786,18 +786,21 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
   const styles = [];
   
   Object.entries(cssProps).forEach(([key, val]) => {
-    for (let i = 0; i < breakpoints.length; i++) {
-      if (Array.isArray(val) && val.length > i || i === 0) {
-        const style = createSingleStyle([key, val], i, config);
-        if (i === 0) {
-          const className = `${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
-          styles.push([className, `.${className.replace(/([%])/g, "\\$1")}{${style}}`]);
-        } else {
+    const style = createSingleStyle([key, val], 0, config);
+    const className = `${key}-${String(Array.isArray(val) ? val[0] : val).replace(/\s/g, "-")}`;
+    styles.push([className, `.${className.replace(/([%])/g, "\\$1")}{${style}}`]);
+  
+    if (Array.isArray(val)) {
+      for (let i = 1; i < breakpoints.length; i++) {
+        const responsiveStyle = createSingleStyle([key, val], i, config);
+        if (val.length > i) {
           const className = `bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
           styles.push([
             className,
-            `@media screen and (min-width: ${breakpoints[i]}px){.${className.replace(/([%])/g, "\\$1")}{${style}}}`
+            `@media screen and (min-width: ${breakpoints[i]}px){.${className.replace(/([%])/g, "\\$1")}{${responsiveStyle}}}`
           ]);
+        } else {
+          break;
         }
       }
     }
@@ -805,20 +808,23 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
   
   Object.entries(pseudoProps).forEach(([k, v]) => {
     Object.entries(v).forEach(([key, val]) => {
-      for (let i = 0; i < breakpoints.length; i++) {
-        if (Array.isArray(val) && val.length > i || i === 0) {
-          const style = createSingleStyle([key, val], i, config);
-          if (i === 0) {
-            const className = `${k}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
-            const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-            styles.push([ className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
-          } else {
+      const style = createSingleStyle([key, val], 0, config);
+      const className = `${k}_${key}-${String(Array.isArray(val) ? val[0] : val).replace(/\s/g, "-")}`;
+      const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
+      styles.push([ className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
+      
+      if (Array.isArray(val)) {
+        for (let i = 1; i < breakpoints.length; i++) {
+          const responsiveStyle = createSingleStyle([key, val], i, config);
+          if (val.length > i) {
             const className = `${k}_bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
             styles.push([
               className,
-              `@media screen and (min-width: ${breakpoints[i]}px){${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}}`
+              `@media screen and (min-width: ${breakpoints[i]}px){${pseudoClassName.replace(/([%])/g, "\\$1")}{${responsiveStyle}}}`
             ]);
+          } else {
+            break;
           }
         }
       }
