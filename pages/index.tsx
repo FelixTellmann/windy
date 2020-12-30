@@ -8,9 +8,9 @@ export const Index: FC = () => {
   
   const [test2, setTest2] = useState(1);
   return <>
-    <Div p={4}>test</Div>
-    <Div p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Div>
-    <H1 p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</H1>
+    {/*<Div p={4}>test</Div>
+    <Div p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Div>*/}
+    <TEST p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</TEST>
      <div className="w-50">asdasd</div>
      <style jsx>{`
       @media screen and (min-width: 600px) {

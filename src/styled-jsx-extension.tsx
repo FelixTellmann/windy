@@ -75,7 +75,7 @@ const styleSheetRegistry = new Registry();
 
 export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAttributes<any> & FactoryProps & CssProps> => {
   if (ref) {
-    return forwardRef(({ element = HTMLTag, ...props }, ref) => {
+    /*return forwardRef(({ element = HTMLTag, ...props }, ref) => {
       const test = windyUi(props);
       // eslint-disable-next-line new-cap
       const [prevProps, setPrevProps] = useState(test.styleArray);
@@ -101,12 +101,12 @@ export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAt
         className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps,
         ref
       }, props.children);
-    });
+    });*/
   } else {
     return ({ element = HTMLTag, ...props }) => {
       const test = windyUi(props);
       // eslint-disable-next-line new-cap
-      const [prevProps, setPrevProps] = useState(test.styleArray);
+      const [prevProps, setPrevProps] = useState([]);
       
       test.styleArray.forEach(([className, style]) => {
         // @ts-ignore
@@ -121,7 +121,7 @@ export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAt
               styleSheetRegistry.remove({ id: className, children: style });
             });
           }
-          setPrevProps(test.styleArray);
+          setPrevProps([...test.styleArray]);
         }
       }, [props]);
       
@@ -154,6 +154,30 @@ export const TEST = ({ element = "div", ...props }) => {
   }, [props]);
   return createElement(element, { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
 };
+
+
+// export const Test: FC<HTMLAttributes<any> & CssProps> = (props) => {
+//   const test = windyUi(props);
+//   // eslint-disable-next-line new-cap
+//   const [prevProps, setPrevProps] = useState([]);
+//
+//   test.styleArray.forEach(([className, style]) => {
+//     styleSheetRegistry.add({ id: className, children: style });
+//   });
+//
+//   if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
+//     prevProps.forEach(([className, style]) => {
+//       styleSheetRegistry.remove({ id: className, children: style });
+//     });
+//   }
+//
+//   useEffect(() => {
+//     setPrevProps(test.styleArray);
+//   }, [props]);
+//
+//   return React.createElement("div", { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
+// };
+
 
 export function flushToReact(options: { nonce?: string; } = {}): Array<ReactElement> {
   // @ts-ignore
