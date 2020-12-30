@@ -3,10 +3,5 @@
     [
       "next/babel"
     ]
-  ],
-  "plugins": [
-    [
-      "styled-jsx2/babel"
-    ]
   ]
 }

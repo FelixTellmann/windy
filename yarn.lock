@@ -540,6 +540,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
+"@babel/plugin-syntax-typescript@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.12.1.tgz#460ba9d77077653803c3dd2e673f76d66b4029e5"
+  integrity sha512-UZNEcCY+4Dp9yYRCAHrHDU+9ZXLYaY9MgBXSRLkB9WjYFRR6quJBumfVrEkUxrePPBwFcpWfNKXqVRQQtm7mMA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
+
 "@babel/plugin-transform-arrow-functions@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.12.1.tgz#8083ffc86ac8e777fbe24b5967c4b2521f3cb2b3"
@@ -829,6 +836,15 @@
   integrity sha512-EPGgpGy+O5Kg5pJFNDKuxt9RdmTgj5sgrus2XVeMp/ZIbOESadgILUbm50SNpghOh3/6yrbsH+NB5+WJTmsA7Q==
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
+
+"@babel/plugin-transform-typescript@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.12.1.tgz#d92cc0af504d510e26a754a7dbc2e5c8cd9c7ab4"
+  integrity sha512-VrsBByqAIntM+EYMqSm59SiMEf7qkmI9dqMt6RbD/wlwueWmYcI0FFK5Fj47pP6DRZm+3teXjosKlwcZJ5lIMw==
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.12.1"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-syntax-typescript" "^7.12.1"
 
 "@babel/plugin-transform-unicode-escapes@^7.12.1":
   version "7.12.1"
@@ -1824,6 +1840,11 @@ babel-plugin-macros@^2.8.0:
     "@babel/runtime" "^7.7.2"
     cosmiconfig "^6.0.0"
     resolve "^1.12.0"
+
+babel-plugin-react-require@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-require/-/babel-plugin-react-require-3.1.3.tgz#ba3d7305b044a90c35c32c5a9ab943fd68e1638d"
+  integrity sha512-kDXhW2iPTL81x4Ye2aUMdEXQ56JP0sBJmRQRXJPH5FsNB7fOc/YCsHTqHv8IovPyw9Rk07gdd7MVUz8tUmRBCA==
 
 babel-plugin-syntax-jsx@6.18.0:
   version "6.18.0"
@@ -7764,10 +7785,10 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-windy-ui@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/windy-ui/-/windy-ui-0.0.0.tgz#81e9a4f03583df3fc0d3ed709fa11174b92680c5"
-  integrity sha512-OQ8rXepKO7B/AIy8NRiaSEDEX4LB7zVx0v0096kb5QQ3BJp26/6uwaWIqoN4kQKJ/BKY3BZ/tCEgCiHEwAUaCA==
+windy-ui@^0.1.0:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/windy-ui/-/windy-ui-0.1.3.tgz#7e8b47fc47894e516a6e61760892f236471b72c9"
+  integrity sha512-rba7nSut9kCxsRGZK9Mem5iazK+KnOP7VCF6AOLgvZ3WwulZvLQZqstrTtgn+rIpMgVRyiL2VU1Sx/Qabk221Q==
   dependencies:
     "@types/node" "^14.14.10"
     "@types/react" "^17.0.0"
@@ -7792,6 +7813,7 @@ windy-ui@^0.0.0:
     string-hash "^1.1.3"
     styled-jsx "^3.3.2"
     typescript "^4.1.3"
+    windy-ui "^0.1.0"
 
 word-wrap@^1.2.3:
   version "1.2.3"

@@ -1,1 +1,1 @@
-export * from "./windy-ui";
+export * from "./styled-jsx-extension";
