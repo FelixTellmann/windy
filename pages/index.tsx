@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import { TEST, Element } from "src/styled-jsx-extension";
+import { TEST/*, Element*/ } from "src/styled-jsx-extension";
 
-const Div = Element('div')
-const H1 = Element('h1')
+/*const Div = Element('div')
+const H1 = Element('h1')*/
 export const Index: FC = () => {
   
   
@@ -11,7 +11,7 @@ export const Index: FC = () => {
     {/*<Div p={4}>test</Div>
     <Div p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</Div>*/}
     <TEST p={test2} border="1px solid red" m="auto" w={[`100%`, `50%`]} d="flex" onClick={() => { setTest2(test2 + 1); }}>aasd</TEST>
-     <div className="w-50">asdasd</div>
+     {/*<div className="w-50">asdasd</div>
      <style jsx>{`
       @media screen and (min-width: 600px) {
         .w-50 {
@@ -19,7 +19,7 @@ export const Index: FC = () => {
           padding: 2px;
         }
       }
-    `}</style>
+    `}</style>*/}
   </>;
 };
 

@@ -18,6 +18,7 @@ function invariant(condition, message) {
 }
 
 class Registry extends StyleSheetRegistry {
+  
   remove(props) {
     // @ts-ignore
     const { styleId } = this.getIdAndRules(props);
@@ -31,6 +32,7 @@ class Registry extends StyleSheetRegistry {
     
     // @ts-ignore
     if (this._instancesCounts[styleId] < 1) {
+      
       // @ts-ignore
       const tagFromServer = this._fromServer && this._fromServer[styleId];
       if (tagFromServer) {
@@ -72,10 +74,10 @@ class Registry extends StyleSheetRegistry {
 }
 
 const styleSheetRegistry = new Registry();
-
+/*
 export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAttributes<any> & FactoryProps & CssProps> => {
   if (ref) {
-    /*return forwardRef(({ element = HTMLTag, ...props }, ref) => {
+    /!*return forwardRef(({ element = HTMLTag, ...props }, ref) => {
       const test = windyUi(props);
       // eslint-disable-next-line new-cap
       const [prevProps, setPrevProps] = useState(test.styleArray);
@@ -101,12 +103,12 @@ export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAt
         className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps,
         ref
       }, props.children);
-    });*/
+    });*!/
   } else {
     return ({ element = HTMLTag, ...props }) => {
       const test = windyUi(props);
       // eslint-disable-next-line new-cap
-      const [prevProps, setPrevProps] = useState([]);
+      const [prevProps, setPrevProps] = useState(test.styleArray);
       
       test.styleArray.forEach(([className, style]) => {
         // @ts-ignore
@@ -129,30 +131,43 @@ export const Element = (HTMLTag: string = "div", ref?: boolean): FC<any & HTMLAt
     };
   }
   
-};
+};*/
 
-export const TEST = ({ element = "div", ...props }) => {
+export const TEST = (props) => {
   const test = windyUi(props);
   // eslint-disable-next-line new-cap
-  const [prevProps, setPrevProps] = useState(test.styleArray);
+  const [prevProps, setPrevProps] = useState<[number, string[]]>([0, test.styleArray.map(([id])=>id)]);
   
   test.styleArray.forEach(([className, style]) => {
-    // @ts-ignore
-    styleSheetRegistry.add({ id: className, children: style });
+    if (prevProps[0] === 0) {
+      // @ts-ignore
+      styleSheetRegistry.add({ id: className, children: style });
+    }
   });
   
-  useEffect(() => {
-    if (JSON.stringify(test.styleArray) !== JSON.stringify(prevProps)) {
-      // @ts-ignore
-      if (prevProps && styleSheetRegistry.cssRules().length !== 0) {
-        prevProps.forEach(([className, style]) => {
-          styleSheetRegistry.remove({ id: className, children: style });
-        });
+  const currentIds = test.styleArray.map(([id])=>id)
+  if (JSON.stringify(currentIds) !== JSON.stringify(prevProps[1])) {
+    test.styleArray.forEach(([className, style]) => {
+      if (!prevProps[1].includes(className)) {
+        // @ts-ignore
+        styleSheetRegistry.add({ id: className, children: style });
       }
-      setPrevProps(test.styleArray);
+    });
+    prevProps[1].forEach(id => {
+      if (!currentIds.includes(id)) {
+        styleSheetRegistry.remove({ id });
+      }
+    })
+    setPrevProps(([count]) =>  [ count + 1, test.styleArray.map(([id])=>id)])
+  }
+  
+  useEffect(() => {
+    if (JSON.stringify(currentIds) !== JSON.stringify(prevProps[1]) || prevProps[0] === 0) {
+        setPrevProps(([count]) =>  [ count + 1, test.styleArray.map(([id])=>id)])
     }
   }, [props]);
-  return createElement(element, { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
+  
+  return createElement('div', { className: cn(test.styleArray.map(([className]) => `${className}`)), ...test.filteredProps }, props.children);
 };
 
 
@@ -190,10 +205,6 @@ export function flushToReact(options: { nonce?: string; } = {}): Array<ReactElem
       // Avoid warnings upon render with a key
       key: `__jsx-preflight`,
       nonce: options.nonce ? options.nonce : undefined,
-      [`data-ids`]: css.reduce((acc, [id], i) => {
-        acc += `${i ? `,` : ""}${id}`;
-        return acc;
-      }, ""),
       dangerouslySetInnerHTML: { __html: preflightCss }
     }),
     createElement("style", {
