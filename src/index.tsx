@@ -1,1 +1,1 @@
-export * from "./styled-jsx-extension";
+export * from "./next-styled-component";

@@ -1,5 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import { flushToReact } from 'src/styled-jsx-extension'
+import { flushToReact } from 'src/next-styled-component'
 
 class MyDocument extends Document {
   

@@ -1,5 +1,5 @@
 import { Property as CSS } from "csstype";
-import React, { useMemo } from "react";
+import React from "react";
 import hashString from "string-hash";
 
 export type LayoutProps = {
@@ -222,16 +222,285 @@ export type ConfigProps = {
   fontSize?: number[]
   breakpoints?: number[]
   remBase?: number
+  color?: { [color: string]: { [intensity: number]: string } | string }
 }
 
 const defaultConfig: ConfigProps = {
   space: [0, 4, 8, 12, 16, 24, 32, 36, 64],
   fontSize: [0, 12, 14, 16, 20, 24, 32, 48, 64],
   breakpoints: [0, 600, 900, 1200],
-  remBase: 10
+  remBase: 10,
+  color: {
+    black: "#000",
+    white: "#fff",
+    rose: {
+      50: "#fff1f2",
+      100: "#ffe4e6",
+      200: "#fecdd3",
+      300: "#fda4af",
+      400: "#fb7185",
+      500: "#f43f5e",
+      600: "#e11d48",
+      700: "#be123c",
+      800: "#9f1239",
+      900: "#881337"
+    },
+    pink: {
+      50: "#fdf2f8",
+      100: "#fce7f3",
+      200: "#fbcfe8",
+      300: "#f9a8d4",
+      400: "#f472b6",
+      500: "#ec4899",
+      600: "#db2777",
+      700: "#be185d",
+      800: "#9d174d",
+      900: "#831843"
+    },
+    fuchsia: {
+      50: "#fdf4ff",
+      100: "#fae8ff",
+      200: "#f5d0fe",
+      300: "#f0abfc",
+      400: "#e879f9",
+      500: "#d946ef",
+      600: "#c026d3",
+      700: "#a21caf",
+      800: "#86198f",
+      900: "#701a75"
+    },
+    purple: {
+      50: "#faf5ff",
+      100: "#f3e8ff",
+      200: "#e9d5ff",
+      300: "#d8b4fe",
+      400: "#c084fc",
+      500: "#a855f7",
+      600: "#9333ea",
+      700: "#7e22ce",
+      800: "#6b21a8",
+      900: "#581c87"
+    },
+    violet: {
+      50: "#f5f3ff",
+      100: "#ede9fe",
+      200: "#ddd6fe",
+      300: "#c4b5fd",
+      400: "#a78bfa",
+      500: "#8b5cf6",
+      600: "#7c3aed",
+      700: "#6d28d9",
+      800: "#5b21b6",
+      900: "#4c1d95"
+    },
+    indigo: {
+      50: "#eef2ff",
+      100: "#e0e7ff",
+      200: "#c7d2fe",
+      300: "#a5b4fc",
+      400: "#818cf8",
+      500: "#6366f1",
+      600: "#4f46e5",
+      700: "#4338ca",
+      800: "#3730a3",
+      900: "#312e81"
+    },
+    blue: {
+      50: "#eff6ff",
+      100: "#dbeafe",
+      200: "#bfdbfe",
+      300: "#93c5fd",
+      400: "#60a5fa",
+      500: "#3b82f6",
+      600: "#2563eb",
+      700: "#1d4ed8",
+      800: "#1e40af",
+      900: "#1e3a8a"
+    },
+    lightBlue: {
+      50: "#f0f9ff",
+      100: "#e0f2fe",
+      200: "#bae6fd",
+      300: "#7dd3fc",
+      400: "#38bdf8",
+      500: "#0ea5e9",
+      600: "#0284c7",
+      700: "#0369a1",
+      800: "#075985",
+      900: "#0c4a6e"
+    },
+    cyan: {
+      50: "#ecfeff",
+      100: "#cffafe",
+      200: "#a5f3fc",
+      300: "#67e8f9",
+      400: "#22d3ee",
+      500: "#06b6d4",
+      600: "#0891b2",
+      700: "#0e7490",
+      800: "#155e75",
+      900: "#164e63"
+    },
+    teal: {
+      50: "#f0fdfa",
+      100: "#ccfbf1",
+      200: "#99f6e4",
+      300: "#5eead4",
+      400: "#2dd4bf",
+      500: "#14b8a6",
+      600: "#0d9488",
+      700: "#0f766e",
+      800: "#115e59",
+      900: "#134e4a"
+    },
+    emerald: {
+      50: "#ecfdf5",
+      100: "#d1fae5",
+      200: "#a7f3d0",
+      300: "#6ee7b7",
+      400: "#34d399",
+      500: "#10b981",
+      600: "#059669",
+      700: "#047857",
+      800: "#065f46",
+      900: "#064e3b"
+    },
+    green: {
+      50: "#f0fdf4",
+      100: "#dcfce7",
+      200: "#bbf7d0",
+      300: "#86efac",
+      400: "#4ade80",
+      500: "#22c55e",
+      600: "#16a34a",
+      700: "#15803d",
+      800: "#166534",
+      900: "#14532d"
+    },
+    lime: {
+      50: "#f7fee7",
+      100: "#ecfccb",
+      200: "#d9f99d",
+      300: "#bef264",
+      400: "#a3e635",
+      500: "#84cc16",
+      600: "#65a30d",
+      700: "#4d7c0f",
+      800: "#3f6212",
+      900: "#365314"
+    },
+    yellow: {
+      50: "#fefce8",
+      100: "#fef9c3",
+      200: "#fef08a",
+      300: "#fde047",
+      400: "#facc15",
+      500: "#eab308",
+      600: "#ca8a04",
+      700: "#a16207",
+      800: "#854d0e",
+      900: "#713f12"
+    },
+    amber: {
+      50: "#fffbeb",
+      100: "#fef3c7",
+      200: "#fde68a",
+      300: "#fcd34d",
+      400: "#fbbf24",
+      500: "#f59e0b",
+      600: "#d97706",
+      700: "#b45309",
+      800: "#92400e",
+      900: "#78350f"
+    },
+    orange: {
+      50: "#fff7ed",
+      100: "#ffedd5",
+      200: "#fed7aa",
+      300: "#fdba74",
+      400: "#fb923c",
+      500: "#f97316",
+      600: "#ea580c",
+      700: "#c2410c",
+      800: "#9a3412",
+      900: "#7c2d12"
+    },
+    red: {
+      50: "#fef2f2",
+      100: "#fee2e2",
+      200: "#fecaca",
+      300: "#fca5a5",
+      400: "#f87171",
+      500: "#ef4444",
+      600: "#dc2626",
+      700: "#b91c1c",
+      800: "#991b1b",
+      900: "#7f1d1d"
+    },
+    warmGray: {
+      50: "#fafaf9",
+      100: "#f5f5f4",
+      200: "#e7e5e4",
+      300: "#d6d3d1",
+      400: "#a8a29e",
+      500: "#78716c",
+      600: "#57534e",
+      700: "#44403c",
+      800: "#292524",
+      900: "#1c1917"
+    },
+    trueGray: {
+      50: "#fafafa",
+      100: "#f5f5f5",
+      200: "#e5e5e5",
+      300: "#d4d4d4",
+      400: "#a3a3a3",
+      500: "#737373",
+      600: "#525252",
+      700: "#404040",
+      800: "#262626",
+      900: "#171717"
+    },
+    gray: {
+      50: "#fafafa",
+      100: "#f4f4f5",
+      200: "#e4e4e7",
+      300: "#d4d4d8",
+      400: "#a1a1aa",
+      500: "#71717a",
+      600: "#52525b",
+      700: "#3f3f46",
+      800: "#27272a",
+      900: "#18181b"
+    },
+    coolGray: {
+      50: "#f9fafb",
+      100: "#f3f4f6",
+      200: "#e5e7eb",
+      300: "#d1d5db",
+      400: "#9ca3af",
+      500: "#6b7280",
+      600: "#4b5563",
+      700: "#374151",
+      800: "#1f2937",
+      900: "#111827"
+    },
+    blueGray: {
+      50: "#f8fafc",
+      100: "#f1f5f9",
+      200: "#e2e8f0",
+      300: "#cbd5e1",
+      400: "#94a3b8",
+      500: "#64748b",
+      600: "#475569",
+      700: "#334155",
+      800: "#1e293b",
+      900: "#0f172a"
+    }
+  }
 };
 
-const cssSelectors = {
+const cssSelectorsOld = {
   margin: "space",
   m: {
     margin: "space"
@@ -596,6 +865,175 @@ const cssSelectors = {
   pointerEvents: "",
   content: ""
 };
+const cssSelectors = {
+  "margin": ["space", [`m`]],
+  "m": [{ "margin": "space" }, [`m`]],
+  "marginTop": ["space", [`mt`]],
+  "mt": [{ "marginTop": "space" }, [`mt`]],
+  "marginRight": ["space", [`mr`]],
+  "mr": [{ "marginRight": "space" }, [`mr`]],
+  "marginBottom": ["space", [`mb`]],
+  "mb": [{ "marginBottom": "space" }, [`mb`]],
+  "marginLeft": ["space", [`ml`]],
+  "ml": [{ "marginLeft": "space" }, [`ml`]],
+  "marginX": [{ "marginLeft": "space", "marginRight": "space" }, [`mx`]],
+  "mx": [{ "marginLeft": "space", "marginRight": "space" }, [`mx`]],
+  "marginY": [{ "marginTop": "space", "marginBottom": "space" }, [`my`]],
+  "my": [{ "marginTop": "space", "marginBottom": "space" }, [`my`]],
+  "padding": ["space", [`p`]],
+  "p": [{ "padding": "space" }, [`p`]],
+  "paddingTop": ["space", [`pt`]],
+  "pt": [{ "paddingTop": "space" }, [`pt`]],
+  "paddingRight": ["space", [`pr`]],
+  "pr": [{ "paddingRight": "space" }, [`pr`]],
+  "paddingBottom": ["space", [`pb`]],
+  "pb": [{ "paddingBottom": "space" }, [`pb`]],
+  "paddingLeft": ["space", [`pl`]],
+  "pl": [{ "paddingLeft": "space" }, [`pl`]],
+  "paddingX": [{ "paddingLeft": "space", "paddingRight": "space" }, [`px`]],
+  "px": [{ "paddingLeft": "space", "paddingRight": "space" }, [`px`]],
+  "paddingY": [{ "paddingTop": "space", "paddingBottom": "space" }, [`py`]],
+  "py": [{ "paddingTop": "space", "paddingBottom": "space" }, [`py`]],
+  "border": ["space", [`b`]],
+  "borderWidth": ["space", [`bw`]],
+  "borderColor": ["color", [`bc`]],
+  "borderStyle": ["", [`bs`]],
+  "borderRadius": ["space", [`br`]],
+  "borderTop": ["space", [`bt`]],
+  "borderTopWidth": ["space", [`btw`]],
+  "borderTopColor": ["color", [`btc`]],
+  "borderTopStyle": ["", [`bts`]],
+  "borderTopLeftRadius": ["space", [`btlr`]],
+  "borderTopRightRadius": ["space", [`btrr`]],
+  "borderBottom": ["space", [`bb`]],
+  "borderBottomWidth": ["space", [`bbw`]],
+  "borderBottomColor": ["color", [`bbc`]],
+  "borderBottomStyle": ["", [`bbs`]],
+  "borderBottomLeftRadius": ["space", [`bblr`]],
+  "borderBottomRightRadius": ["space", [`bbrr`]],
+  "borderLeft": ["space", [`bl`]],
+  "borderLeftWidth": ["space", [`blw`]],
+  "borderLeftColor": ["color", [`blc`]],
+  "borderLeftStyle": ["", [`bls`]],
+  "borderRight": ["space", [`br`]],
+  "borderRightWidth": ["space", [`brw`]],
+  "borderRightColor": ["", [`brc`]],
+  "borderRightStyle": ["", [`brs`]],
+  "borderX": [{ "borderLeft": "space", "borderRight": "space" }, [`bx`]],
+  "borderXWidth": [{ "borderLeftWidth": "space", "borderRightWidth": "space" }, [`bxw`]],
+  "borderXColor": [{ "borderLeftColor": "color", "borderRightColor": "" }, [`bxc`]],
+  "borderXStyle": [{ "borderLeftStyle": "", "borderRightStyle": "" }, [`bxs`]],
+  "borderY": [{ "borderTop": "space", "borderBottom": "space" }, [`by`]],
+  "borderYWidth": [{ "borderTopWidth": "space", "borderBottomWidth": "space" }, [`byw`]],
+  "borderYColor": [{ "borderTopColor": "color", "borderBottomColor": "color" }, [`byc`]],
+  "borderYStyle": [{ "borderTopStyle": "", "borderBottomStyle": "" }, [`bys`]],
+  "width": ["space", [`w`]],
+  "w": [{ "width": "space" }, [`w`]],
+  "height": ["space", [`h`]],
+  "h": [{ "height": "space" }, [`h`]],
+  "size": [{ "width": "space", "height": "space" }, [`s`]],
+  "minWidth": ["space", [`minw`]],
+  "minW": [{ "minWidth": "space" }, [`minw`]],
+  "maxWidth": ["space", [`maxw`]],
+  "maxW": [{ "maxWidth": "space" }, [`maxw`]],
+  "minHeight": ["space", [`minh`]],
+  "minH": [{ "minHeight": "space" }, [`minh`]],
+  "maxHeight": ["space", [`maxh`]],
+  "maxH": [{ "maxHeight": "space" }, [`maxh`]],
+  "display": ["", [`d`]],
+  "d": [{ "display": "" }, [`d`]],
+  "verticalAlign": ["", [`va`]],
+  "justifyContent": [{ "-ms-flex-pack": "", "-webkit-box-pack": "", "justifyContent": "" }],
+  "justify": [{ "-webkit-box-pack": "", "-ms-flex-pack": "", "justifyContent": "" }],
+  "alignItems": [{ "-ms-flex-align": "", "-webkit-box-align": "", "alignItems": "" }],
+  "align": [{ "-ms-flex-align": "", "-webkit-box-align": "", "alignItems": "" }],
+  "alignContent": [{ "-ms-flex-line-pack": "", "alignContent": "" }],
+  "flexDirection": [{ "-ms-flex-direction": "", "-webkit-box-orient": "", "-webkit-box-direction": "", "flexDirection": "" }],
+  "direction": [{ "-ms-flex-direction": "", "-webkit-box-orient": "", "-webkit-box-direction": "", "flexDirection": "" }],
+  "flex": [{ "-mx-flex": "", "webkit-box-flex": "", "webkit-flex": "", "flex": "" }],
+  "flexWrap": [{ "-ms-flex-wrap": "", "flexWrap": "" }],
+  "wrap": [{ "-ms-flex-wrap": "", "flexWrap": "" }],
+  "flexBasis": [{ "-ms-flex-preferred-size": "", "-mx-flex": "", "flexBasis": "" }],
+  "flexGrow": [{ "-ms-flex-positive": "", "-webkit-box-flex": "", "flexGrow": "" }],
+  "flexShrink": [{ "-ms-flex-negative": "", "flexShrink": "" }],
+  "alignSelf": [{ "-ms-grid-row-align": "", "alignSelf": "" }],
+  "justifySelf": [{ "-ms-grid-column-align": "", "justifySelf": "" }],
+  "order": [{ "-ms-flex-order": "", "-webkit-box-ordinal-group": "", "order": "" }],
+  "gridGap": ["space"],
+  "gap": [{ "gridGap": "gridGap" }],
+  "gridRowGap": ["space"],
+  "gridColumnGap": ["space"],
+  "gridColumn": [""],
+  "gridRow": [""],
+  "gridArea": [""],
+  "gridAutoFlow": [""],
+  "gridAutoRows": [""],
+  "gridAutoColumns": [""],
+  "gridTemplateRows": [{ "-ms-grid-rows": "", "gridTemplateRows": "" }],
+  "gridTemplateColumns": [{ "-ms-grid-columns": "", "gridTemplateColumns": "" }],
+  "gridTemplateAreas": [""],
+  "position": ["",[`pos`]],
+  "top": ["space"],
+  "right": ["space"],
+  "bottom": ["space"],
+  "left": ["space"],
+  "zIndex": ["zIndices"],
+  "overflow": [""],
+  "overflowX": [""],
+  "overflowY": [""],
+  "color": ["color"],
+  "background": ["color", [`bg`]],
+  "bg": [{ "background": "color" }],
+  "opacity": [""],
+  "backgroundAttachment": ["", [`bga`]],
+  "backgroundClip": [{ "-webkit-background-clip": "", "backgroundClip": "" }, [`bgclip`]],
+  "backgroundColor": ["color", [`bgc`]],
+  "backgroundImage": ["", [`bgi`]],
+  "backgroundOrigin": ["", [`bgo`]],
+  "backgroundPositionX": ["space", [`bgpx`]],
+  "backgroundPositionY": ["space", [`bgpy`]],
+  "backgroundSize": ["space", [`bgs`]],
+  "backdropFilter": [{ "-webkit-backdropFilter": "", "backdropFilter": "" }],
+  "boxShadow": [{ "-webkit-box-shadow": "", "boxShadow": "" }],
+  "outline": [""],
+  "outlineColor": ["color"],
+  "outlineOffset": ["space"],
+  "outlineStyle": [""],
+  "outlineWidth": ["space"],
+  "visibility": [""],
+  "fontFamily": [""],
+  "fontSize": ["fontSize",[`fz`]],
+  "fz": [{ "fontSize": "fontSize" },[`fz`]],
+  "fontWeight": ["",[`fw`]],
+  "fw": [{ "fontWeight": "fontWeight" },[`fw`]],
+  "weight": [{ "fontWeight": "fontWeight" },[`fw`]],
+  "lineHeight": ["",[`lh`]],
+  "letterSpacing": ["",[`ls`]],
+  "textAlign": ["",[`talign`]],
+  "fontStyle": [""],
+  "textDecoration": [""],
+  "textTransform": [""],
+  "textShadow": [""],
+  "whiteSpace": [""],
+  "wordWrap": [""],
+  "wordBreak": [""],
+  "fill": [""],
+  "filter": [{ "-webkit-filter": "", "filter": "" }],
+  "stroke": [""],
+  "transition": [{ "-o-transition": "", "-webkit-transition": "", "transition": "" }],
+  "transitionDelay": [{ "-webkit-transition-delay": "", "transitionDelay": "" }],
+  "transitionDuration": [{ "-webkit-transition-duration": "", "transitionDuration": "" }],
+  "TransitionProperty": [{ "-webkit-transition-property": "", "TransitionProperty": "" }],
+  "TransitionTimingFunction": [{ "-webkit-transition-timing-function": "", "TransitionTimingFunction": "" }],
+  "transform": [{ "-ms-transform": "", "-webkit-transform": "", "transform": "" }],
+  "cursor": [""],
+  "resize": [""],
+  "objectFit": [{ "-o-object-fit": "", "objectFit": "" }],
+  "userSelect": [{ "-webkit-user-select": "", "-moz-user-select": "", "-ms-user-select": "", "userSelect": "" }],
+  "appearance": [{ "-webkit-appearance": "", "appearance": "" }],
+  "pointerEvents": [""],
+  "content": ["content"]
+};
 
 const pseudoSelectors = {
   _forwardSelector: `& ~`,
@@ -650,6 +1088,7 @@ function parseCssVariables(val: string | number) {
 }
 
 function parseCssSizes(val: number | string, type: "" | "fontSize" | "space", { remBase, ...cfg }): string {
+  
   if (typeof val === "string") {
     return val.replace(/([\d.]+)px/gi, (match) => `${parseFloat(match) / remBase}rem`);
   }
@@ -669,10 +1108,13 @@ function getResponsiveValue(val: string | number | (string | number)[], bp: numb
   return val[val.length - 1 >= bp ? bp : val.length - 1];
 }
 
-function toCssValue(key: "" | "fontSize" | "space", val: string | number, cfg): string {
+function toCssValue(key: "" | "fontSize" | "space" | "content", val: string | number, cfg): string {
+  if (key === 'content') console.log(val)
+  if (key === 'content') return `"${val}"`
   if (cfg[key]) {
     return parseCssVariables(parseCssSizes(val, key, cfg));
   }
+ 
   return parseCssVariables(val);
 }
 
@@ -686,10 +1128,10 @@ function createStyleString(parsedCssProps: LayoutProps, breakpoint = 0, cfg: Con
         acc += `display:-webkit-flex;`;
         acc += `display:-ms-flexbox;`;
         acc += `display:flex;`;
-      } else if (typeof cssSelectors[key] === "string") {
-        acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key], getResponsiveValue(val, breakpoint), cfg)};`;
-      } else if (cssSelectors[key] !== undefined) {
-        Object.entries(cssSelectors[key]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
+      } else if (typeof cssSelectors[key][0] === "string") {
+        acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key][0], getResponsiveValue(val, breakpoint), cfg)};`;
+      } else if (cssSelectors[key][0] !== undefined) {
+        Object.entries(cssSelectors[key][0]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
           acc += `${toCssProperty(key2)}:${toCssValue(val2, getResponsiveValue(val, breakpoint), cfg)};`;
         });
       }
@@ -699,10 +1141,10 @@ function createStyleString(parsedCssProps: LayoutProps, breakpoint = 0, cfg: Con
         acc += `display:-webkit-flex;`;
         acc += `display:-ms-flexbox;`;
         acc += `display:flex;`;
-      } else if (typeof cssSelectors[key] === "string") {
-        acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key], getResponsiveValue(val, breakpoint), cfg)};`;
-      } else if (cssSelectors[key] !== undefined) {
-        Object.entries(cssSelectors[key]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
+      } else if (typeof cssSelectors[key][0] === "string") {
+        acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key][0], getResponsiveValue(val, breakpoint), cfg)};`;
+      } else if (cssSelectors[key][0] !== undefined) {
+        Object.entries(cssSelectors[key][0]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
           acc += `${toCssProperty(key2)}:${toCssValue(val2, getResponsiveValue(val, breakpoint), cfg)};`;
         });
       }
@@ -720,10 +1162,10 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
       acc += `display:-webkit-flex;`;
       acc += `display:-ms-flexbox;`;
       acc += `display:flex;`;
-    } else if (typeof cssSelectors[key] === "string") {
-      acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key], getResponsiveValue(val, breakpoint), cfg)};`;
-    } else if (cssSelectors[key] !== undefined) {
-      Object.entries(cssSelectors[key]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
+    } else if (typeof cssSelectors[key][0] === "string") {
+      acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key][0], getResponsiveValue(val, breakpoint), cfg)};`;
+    } else if (cssSelectors[key][0] !== undefined) {
+      Object.entries(cssSelectors[key][0]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
         acc += `${toCssProperty(key2)}:${toCssValue(val2, getResponsiveValue(val, breakpoint), cfg)};`;
       });
     }
@@ -733,10 +1175,10 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
       acc += `display:-webkit-flex;`;
       acc += `display:-ms-flexbox;`;
       acc += `display:flex;`;
-    } else if (typeof cssSelectors[key] === "string") {
-      acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key], getResponsiveValue(val, breakpoint), cfg)};`;
-    } else if (cssSelectors[key] !== undefined) {
-      Object.entries(cssSelectors[key]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
+    } else if (typeof cssSelectors[key][0] === "string") {
+      acc += `${toCssProperty(key)}:${toCssValue(cssSelectors[key][0], getResponsiveValue(val, breakpoint), cfg)};`;
+    } else if (cssSelectors[key][0] !== undefined) {
+      Object.entries(cssSelectors[key][0]).forEach(([key2, val2]: [string, "" | "fontSize" | "space"]) => {
         acc += `${toCssProperty(key2)}:${toCssValue(val2, getResponsiveValue(val, breakpoint), cfg)};`;
       });
     }
@@ -746,7 +1188,7 @@ function createSingleStyle([key, val]: any, breakpoint = 0, cfg: ConfigProps): s
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function windyUi(props: any, config: ConfigProps = {}): { id?: string; styles?: string; styleArray: [string,  string][]; filteredProps? } {
+export function nextStyledSystem(props: any, config: ConfigProps = {}): { id?: string; styles?: string; styleArray: [string, string][]; filteredProps? } {
   
   if (!("breakpoints" in config)) config.breakpoints = defaultConfig.breakpoints;
   if (!("remBase" in config)) config.remBase = defaultConfig.remBase;
@@ -754,24 +1196,24 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
   if (!("fontSize" in config)) config.fontSize = defaultConfig.fontSize;
   const { breakpoints } = config;
   
-  const filteredProps = useMemo(() => Object.entries(props).reduce((a, [k, v]) => {
-    if (cssSelectors[k] === undefined && pseudoSelectors[k] === undefined) {
+  const filteredProps = /*useMemo(() => */Object.entries(props).reduce((a, [k, v]) => {
+    if (cssSelectors[k] === undefined && pseudoSelectors[k] === undefined && k !== "HTMLTag" && k !== "forwardedRef") {
       return { ...a, [k]: v };
     }
     return a;
-  }, {}), [props]);
-  const cssProps = useMemo(() => Object.entries(props).reduce((a, [k, v]) => {
+  }, {});/*, [props]);*/
+  const cssProps = /*useMemo(() => */Object.entries(props).reduce((a, [k, v]) => {
     if (cssSelectors[k] !== undefined && pseudoSelectors[k] === undefined) {
       return { ...a, [k]: v };
     }
     return a;
-  }, {}), [props]);
-  const pseudoProps = useMemo(() => Object.entries(props).reduce((a, [k, v]) => {
+  }, {});/*, [props]);*/
+  const pseudoProps = /*useMemo(() => */Object.entries(props).reduce((a, [k, v]) => {
     if (cssSelectors[k] === undefined && pseudoSelectors[k] !== undefined) {
       return { ...a, [k]: v };
     }
     return a;
-  }, {}), [props]);
+  }, {});/*, [props]);*/
   
   const base = breakpoints.map((bp, i) => createStyleString(cssProps, i, config)
     && `${i !== 0
@@ -785,16 +1227,20 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
   
   const styles = [];
   
-  Object.entries(cssProps).forEach(([key, val]) => {
+  /*= =============== Create Styles & Classes - CSS Selectors ================ */
+  Object.entries(cssProps).forEach(([key, val]: [ string, string | number | (string | number)[]]) => {
     const style = createSingleStyle([key, val], 0, config);
-    const className = `${key}-${String(Array.isArray(val) ? val[0] : val).replace(/\s/g, "-")}`;
+    const cssValue = toCssValue(typeof cssSelectors[key][0] === "string" ? cssSelectors[key][0] : cssSelectors[key][0][Object.keys(cssSelectors[key][0])[0]], getResponsiveValue(val, 0), config).split(' ');
+    const cleanCssValue = cssValue.map(val=> val.match(/rem$/) ? String(+val.replace(/rem$/, '') * 10) : val).join('-');
+    const className = `${cssSelectors[key][1] ? cssSelectors[key][1][0] : key}-${cleanCssValue.replace(/\s/g, "-").replace(/[!&\/\\#,+()$~%.'":*?<>{}]/g,'')}`;
     styles.push([className, `.${className.replace(/([%])/g, "\\$1")}{${style}}`]);
-  
     if (Array.isArray(val)) {
       for (let i = 1; i < breakpoints.length; i++) {
         const responsiveStyle = createSingleStyle([key, val], i, config);
         if (val.length > i) {
-          const className = `bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
+          const cssValue = toCssValue(typeof cssSelectors[key][0] === "string" ? cssSelectors[key][0] : cssSelectors[key][0][Object.keys(cssSelectors[key][0])[0]], getResponsiveValue(val, i), config).split(' ');
+          const cleanCssValue = cssValue.map(val=> val.match(/rem$/) ? String(+val.replace(/rem$/, '') * 10) : val).join('-');
+          const className = `bp${i}_${cssSelectors[key][1] ? cssSelectors[key][1][0] : key}-${cleanCssValue.replace(/\s/g, "-").replace(/[!&\/\\#,+()$~%.'":*?<>{}]/g,'')}`;
           styles.push([
             className,
             `@media screen and (min-width: ${breakpoints[i]}px){.${className.replace(/([%])/g, "\\$1")}{${responsiveStyle}}}`
@@ -806,18 +1252,19 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
     }
   });
   
+  /*= =============== Create Styles & Classes - PSEUDO SELECTORS ================ */
   Object.entries(pseudoProps).forEach(([k, v]) => {
     Object.entries(v).forEach(([key, val]) => {
       const style = createSingleStyle([key, val], 0, config);
-      const className = `${k}_${key}-${String(Array.isArray(val) ? val[0] : val).replace(/\s/g, "-")}`;
+      const className = `${k}-${cssSelectors[key][1] ? cssSelectors[key][1][0] : key}-${String(Array.isArray(val) ? val[0] : val).replace(/\s/g, "-")}`;
       const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
-      styles.push([ className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
+      styles.push([className, `${pseudoClassName.replace(/([%])/g, "\\$1")}{${style}}`]);
       
       if (Array.isArray(val)) {
         for (let i = 1; i < breakpoints.length; i++) {
           const responsiveStyle = createSingleStyle([key, val], i, config);
           if (val.length > i) {
-            const className = `${k}_bp${i}_${key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
+            const className = `${k}-bp${i}-${cssSelectors[key][1] ? cssSelectors[key][1][0] : key}-${String(Array.isArray(val) ? val[i] : val).replace(/\s/g, "-")}`;
             const pseudoClassName = pseudoSelectors[k].replace(/&/gi, `.${className}`);
             styles.push([
               className,
@@ -833,6 +1280,7 @@ export function windyUi(props: any, config: ConfigProps = {}): { id?: string; st
   
   const id = (base + pseudo) !== "" ? String(hashString(base + pseudo)) : undefined;
   let style = (base + pseudo).replace(/&/g, `.jsx-${id}`);
+  
   if (props._forwardSelector && props._forwardSelector.selector) {
     style = style.replace(/~/g, props._forwardSelector.selector);
   }
