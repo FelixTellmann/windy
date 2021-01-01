@@ -1109,7 +1109,6 @@ function getResponsiveValue(val: string | number | (string | number)[], bp: numb
 }
 
 function toCssValue(key: "" | "fontSize" | "space" | "content", val: string | number, cfg): string {
-  if (key === 'content') console.log(val)
   if (key === 'content') return `"${val}"`
   if (cfg[key]) {
     return parseCssVariables(parseCssSizes(val, key, cfg));
